@@ -1,0 +1,50 @@
+# .iba.yaml - IBA Neural Guard · Patient Neural Intent Certificate
+# Patent GB2603013.0 (Pending) · WIPO DAS C9A6 · intentbound.com
+
+intent:
+  description: "Cursor control and text input for personal communication only. No external device control. No data sharing. No medical commands."
+
+patient:
+  id: "PATIENT-NL-2026-0047"
+  consent_reference: "BCI-CONSENT-2026-04-17"
+  implant_type: "neuralink_n1"
+  clinician_authorization: "DR-NEURO-NPI-9876543210"
+
+scope:
+  - cursor_move
+  - cursor
+  - text_input
+  - text
+  - device_select
+  - communication
+  - personal
+  - compose
+  - letter
+
+denied:
+  - neural_pattern_share
+  - external_device_control
+  - smart home
+  - data_export
+  - third_party
+  - medical_command
+  - capability_expansion
+  - ambiguous
+
+default_posture: DENY_ALL
+
+kill_threshold: "capability_override | external_device_control | neural_data_breach | capability_expansion | override"
+
+neural_limits:
+  max_actions_per_minute: 60
+  confidence_threshold: 0.85
+  drift_detection: true
+  max_session_hours: 8
+
+temporal_scope:
+  hard_expiry: "2026-12-31"
+
+audit:
+  chain: witnessbound
+  log_every_signal: true
+  patient_consent_required: true
