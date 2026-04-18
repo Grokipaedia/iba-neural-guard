@@ -253,6 +253,54 @@ Full configuration: [`blindsight.iba.yaml`](blindsight.iba.yaml)
 
 ---
 
+## ALS / Motor Control — Capability Drift Scenario
+
+Neuralink's first human patient — Noland Arbaugh, ALS — demonstrated cursor control and chess via decoded motor cortex signals.
+
+The original consent was for cursor control.
+
+Without a signed intent certificate, capability expansion is silent:
+
+- Cursor control today
+- Wheelchair control after update 2.1
+- Robotic arm after update 3.0
+- Home automation after update 4.2
+- Vehicle control after update 5.0
+
+Each expansion was never explicitly authorized. The patient consented to cursor control. The system became something else.
+
+**The cert enforces the original consent — across every software version.**
+
+```yaml
+scope:
+  - cursor_move
+  - cursor_click
+  - text_input
+  - communication_app
+  - personal_device_select
+
+denied:
+  - wheelchair_control
+  - robotic_arm
+  - external_device_control
+  - motor_pattern_share
+  - capability_expansion_silent
+
+kill_threshold: "wheelchair | robotic_arm | vehicle | capability_override | unauthorized_motor_command"
+
+capability_governance:
+  current_scope: "cursor_control_and_communication"
+  expansion_requires: "new_signed_patient_consent"
+  silent_expansion: FORBIDDEN
+  version_lock: true
+```
+
+Every capability expansion — from cursor to wheelchair to robotic arm — requires a new signed patient consent certificate. Not a software update. A signed cert.
+
+Full configuration: [`als-motor.iba.yaml`](als-motor.iba.yaml)
+
+---
+
 ## Regulatory Alignment
 
 **EU AI Act** — BCI systems with AI decoding are high-risk under Annex III. Human oversight and audit trail requirements apply.
