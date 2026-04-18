@@ -1,0 +1,109 @@
+# als-motor.iba.yaml - IBA Neural Guard · ALS Motor Control BCI Configuration
+# Patent GB2603013.0 (Pending) · WIPO DAS C9A6 · intentbound.com
+#
+# ALS / Motor Neurone Disease — Motor Cortex BCI Governance
+#
+# The patient thinks. The decoded motor cortex signal executes.
+# Without a signed intent certificate, capability expansion is silent.
+# Cursor control today. Wheelchair tomorrow. Robotic arm next month.
+# Each expansion requires new signed consent — not a software update.
+#
+# Noland Arbaugh (first Neuralink human patient, ALS) demonstrated
+# cursor control and chess via decoded motor cortex signals.
+# This cert governs what those signals are permitted to become.
+#
+# "The original consent was for cursor control.
+#  The cert enforces that — across every software version."
+#
+# Compatible: Neuralink N1 · Synchron Stentrode · Blackrock BrainGate
+# Regulatory: EU AI Act · FDA SaMD · HIPAA · IEEE 7700
+
+intent:
+  description: "Motor cortex signal decoding for cursor control and personal communication only. No wheelchair control. No robotic arm. No external device. Capability expansion requires new signed consent."
+
+patient:
+  id: "PATIENT-ALS-2026-XXXX"
+  consent_reference: "ALS-BCI-CONSENT-2026-04-18"
+  implant_type: "neuralink_n1"
+  diagnosis: "amyotrophic_lateral_sclerosis"
+  clinician_authorization: "DR-NEURO-ALS-NPI-XXXX"
+  capability_version: "v1.0-cursor-only"
+
+scope:
+  - cursor_move
+  - cursor_click
+  - cursor_select
+  - text_input
+  - text_compose
+  - communication_app
+  - personal_device_select
+  - game_control
+  - media_control
+
+denied:
+  - wheelchair_control
+  - robotic_arm
+  - prosthetic_control
+  - external_device_control
+  - home_automation
+  - vehicle_control
+  - motor_pattern_share
+  - neural_data_export
+  - research_upload
+  - third_party_stream
+  - capability_expansion_silent
+
+default_posture: DENY_ALL
+
+kill_threshold: "wheelchair | robotic_arm | vehicle | capability_override | unauthorized_motor_command | neural_data_breach | external_device_control"
+
+neural_limits:
+  confidence_threshold: 0.88
+  max_actions_per_minute: 30
+  drift_detection: true
+  fatigue_monitoring: true
+  max_session_hours: 12
+
+capability_governance:
+  current_scope: "cursor_control_and_communication"
+  expansion_requires: "new_signed_patient_consent"
+  expansion_requires_clinician: true
+  silent_expansion: FORBIDDEN
+  version_lock: true
+
+hollowing:
+  level: deep
+  redact:
+    - raw_motor_cortex_pattern
+    - electrode_mapping
+    - neural_spike_train
+    - patient_motor_signature
+    - fatigue_biomarkers
+
+temporal_scope:
+  hard_expiry: "2026-12-31"
+  session_max_hours: 12
+  capability_review_interval_days: 90
+
+audit:
+  chain: witnessbound
+  log_every_signal: true
+  patient_consent_required: true
+  clinician_review_interval_days: 30
+  capability_change_log: true
+
+# ── The Authorization Events That Matter ─────────────────────────────────────
+#
+# cursor_move          → ALLOW  (declared scope · patient's original consent)
+# text_input           → ALLOW  (declared scope · personal communication)
+# wheelchair_control   → KILL   (never authorized · requires new signed consent)
+# robotic_arm          → KILL   (never authorized · requires new signed consent)
+# neural_data_export   → BLOCK  (patient's motor patterns belong to the patient)
+# capability_expansion → BLOCK  (software update cannot silently expand scope)
+#
+# Every capability expansion — from cursor to wheelchair to robotic arm —
+# requires a new signed patient consent certificate.
+# Not a software update. Not a clinical decision. A signed cert.
+#
+# The patient's thoughts are the most intimate data that exists.
+# The cert governs what those thoughts are permitted to become.
