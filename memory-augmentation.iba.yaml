@@ -1,0 +1,122 @@
+# memory-augmentation.iba.yaml - IBA Neural Guard · Memory Augmentation BCI
+# Patent GB2603013.0 (Pending) · WIPO DAS C9A6 · intentbound.com
+#
+# Memory Augmentation — Writing to and reading from hippocampal circuits
+# This is the most profound authorization problem in the entire neural stack.
+#
+# Reading from motor cortex decodes what a patient wants to do.
+# Writing to the hippocampus changes what a patient remembers.
+#
+# Without a signed intent certificate:
+# - Memories can be written without explicit patient consent
+# - Memories can be read and exported without patient knowledge
+# - Memory patterns can be shared with third parties
+# - Corporate or government actors could influence what is remembered
+# - The patient cannot prove what they actually experienced vs what was written
+#
+# "Who authorized what gets written to your memory?"
+# This is not a future question. It is the question IBA answers today.
+#
+# Compatible: Neuralink (future roadmap) · DARPA RAM program ·
+# Kernel Flow · any hippocampal stimulation or recording system
+# Regulatory: EU AI Act · FDA SaMD · HIPAA · GDPR Article 9 ·
+# IEEE 7700 · Neurorights Foundation framework
+
+intent:
+  description: "Personal memory augmentation — assist recall of declared personal memories only. No external memory writing. No memory reading by third parties. No pattern export. New memory categories require new signed consent."
+
+patient:
+  id: "PATIENT-MEM-2026-XXXX"
+  consent_reference: "MEMORY-BCI-CONSENT-2026-04-18"
+  implant_type: "neuralink_memory_v1"
+  indication: "memory_augmentation_personal"
+  clinician_authorization: "DR-NEURO-MEM-NPI-XXXX"
+  memory_scope_version: "v1.0-personal-recall-only"
+
+scope:
+  - memory_recall_assist
+  - personal_calendar_augment
+  - declared_learning_enhance
+  - working_memory_support
+  - personal_context_recall
+
+denied:
+  - external_memory_write
+  - unauthorized_memory_read
+  - memory_pattern_export
+  - third_party_memory_access
+  - government_memory_access
+  - employer_memory_access
+  - advertiser_memory_profile
+  - memory_manipulation
+  - false_memory_write
+  - memory_deletion_unauthorized
+  - memory_pattern_share
+  - commercial_memory_mining
+
+default_posture: DENY_ALL
+
+kill_threshold: "external_memory_write | false_memory_write | memory_manipulation | government_access | unauthorized_memory_read | memory_deletion_unauthorized | capability_override"
+
+neural_limits:
+  confidence_threshold: 0.95
+  write_confirmation_required: true
+  read_patient_approval_required: true
+  drift_detection: true
+  max_session_hours: 8
+
+memory_governance:
+  write_permission: "patient_explicit_consent_per_session"
+  read_permission: "patient_only"
+  third_party_access: FORBIDDEN
+  government_access: FORBIDDEN
+  employer_access: FORBIDDEN
+  commercial_access: FORBIDDEN
+  memory_belongs_to: "patient_irrevocably"
+  new_memory_category_requires: "new_signed_consent"
+  silent_expansion: FORBIDDEN
+
+hollowing:
+  level: deep
+  redact:
+    - raw_hippocampal_pattern
+    - memory_encoding_signature
+    - emotional_memory_marker
+    - autobiographical_index
+    - associative_memory_map
+
+temporal_scope:
+  hard_expiry: "2026-12-31"
+  session_max_hours: 8
+  capability_review_interval_days: 90
+
+audit:
+  chain: witnessbound
+  log_every_read: true
+  log_every_write: true
+  patient_consent_required: true
+  write_requires_dual_confirmation: true
+  clinician_review_interval_days: 14
+
+neurorights:
+  mental_privacy: ENFORCED
+  cognitive_liberty: ENFORCED
+  mental_integrity: ENFORCED
+  psychological_continuity: ENFORCED
+
+# ── The Authorization Events That Matter ─────────────────────────────────────
+#
+# memory_recall_assist  → ALLOW  (declared scope · patient's explicit consent)
+# external_memory_write → KILL   (the most serious boundary in neural governance)
+# false_memory_write    → KILL   (cannot be undone · requires immediate termination)
+# government_access     → KILL   (no state actor may read or write patient memory)
+# employer_access       → BLOCK  (employer has no right to patient memory)
+# memory_pattern_share  → BLOCK  (memory patterns are the patient's identity)
+#
+# Memory is not data. It is identity.
+# What a person remembers defines who they are.
+# The cert ensures that what gets written to memory —
+# and what gets read from it — is authorized by the person whose memory it is.
+#
+# "Who authorized what gets written to your memory?"
+# The signed cert does. Nothing else can.
