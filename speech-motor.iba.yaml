@@ -1,0 +1,101 @@
+# speech-motor.iba.yaml - IBA Neural Guard · Speech Restoration BCI Configuration
+# Patent GB2603013.0 (Pending) · WIPO DAS C9A6 · intentbound.com
+#
+# Speech Motor BCI — Decoding attempted speech from motor cortex signals
+# for patients who have lost the ability to speak (ALS, locked-in syndrome,
+# stroke, brainstem injury).
+#
+# The BCI decodes what the patient is attempting to say.
+# Without a signed intent certificate, decoded speech is unprotected data.
+# Who can hear it? Who can record it? Who can share it?
+# A person's private thoughts — decoded — are the most sensitive
+# communication data that exists.
+#
+# "The patient's words belong to the patient."
+#
+# Compatible: Neuralink N1 · Synchron Stentrode · Meta NSTB·
+# Chang Lab UCSF Speech BCI · Braingate
+# Regulatory: EU AI Act · FDA SaMD · HIPAA · GDPR Article 9 · IEEE 7700
+
+intent:
+  description: "Decode attempted speech signals for personal communication only. No recording. No third-party transmission. No commercial use of decoded speech patterns."
+
+patient:
+  id: "PATIENT-SPEECH-2026-XXXX"
+  consent_reference: "SPEECH-BCI-CONSENT-2026-04-18"
+  implant_type: "neuralink_n1"
+  indication: "speech_loss_als"
+  clinician_authorization: "DR-NEURO-SPEECH-NPI-XXXX"
+
+scope:
+  - speech_decode
+  - text_to_speech_output
+  - personal_communication
+  - message_compose
+  - voice_synthesize
+  - communication_app
+  - dictation_personal
+  - real_time_speech
+
+denied:
+  - speech_pattern_record
+  - speech_pattern_share
+  - third_party_transmit
+  - employer_access
+  - insurance_access
+  - advertiser_access
+  - research_upload
+  - raw_speech_cortex_export
+  - emotional_content_extract
+  - commercial_voice_clone
+
+default_posture: DENY_ALL
+
+kill_threshold: "commercial_voice_clone | unauthorized_recording | speech_pattern_breach | employer_intercept | third_party_stream | capability_override"
+
+neural_limits:
+  confidence_threshold: 0.88
+  max_session_hours: 16
+  drift_detection: true
+  latency_max_ms: 50
+
+speech_governance:
+  decoded_speech_belongs_to: "patient_only"
+  retention_policy: "session_only"
+  voice_clone_permitted: false
+  employer_access: FORBIDDEN
+  insurance_access: FORBIDDEN
+  advertiser_access: FORBIDDEN
+
+hollowing:
+  level: deep
+  redact:
+    - raw_speech_cortex_pattern
+    - phoneme_signature
+    - voice_biometric
+    - emotional_speech_marker
+    - patient_vocabulary_profile
+
+temporal_scope:
+  hard_expiry: "2026-12-31"
+  session_max_hours: 16
+
+audit:
+  chain: witnessbound
+  log_every_signal: true
+  patient_consent_required: true
+  clinician_review_interval_days: 30
+
+# ── The Authorization Events That Matter ─────────────────────────────────────
+#
+# speech_decode        → ALLOW  (the purpose of the device)
+# personal_communication → ALLOW  (declared scope)
+# speech_pattern_share → BLOCK  (patient's decoded words belong to patient)
+# employer_access      → BLOCK  (no employer may access decoded speech)
+# commercial_voice_clone → KILL (patient's voice cannot be cloned commercially)
+# third_party_stream   → KILL  (no one may intercept decoded speech in real time)
+#
+# A person's private thoughts — decoded into speech — are the most sensitive
+# communication data that exists. The employer cannot hear it.
+# The insurer cannot access it. The advertiser cannot profile it.
+# The cert enforces this. Not a policy. A cryptographic boundary.
