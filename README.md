@@ -301,6 +301,104 @@ Full configuration: [`als-motor.iba.yaml`](als-motor.iba.yaml)
 
 ---
 
+## Speech Restoration — Decoded Speech Governance
+
+For patients who have lost the ability to speak (ALS, locked-in syndrome, stroke), BCI systems decode attempted speech from motor cortex signals.
+
+A person's private thoughts — decoded into words — are the most sensitive communication data that exists.
+
+Without a cert: the employer can hear it. The insurer can access it. The advertiser can profile it. The decoded speech stream can be transmitted to third parties in real time.
+
+```yaml
+denied:
+  - speech_pattern_share
+  - employer_access
+  - insurer_access
+  - advertiser_access
+  - commercial_voice_clone
+
+kill_threshold: "commercial_voice_clone | unauthorized_recording | employer_intercept | third_party_stream"
+
+speech_governance:
+  decoded_speech_belongs_to: "patient_only"
+  retention_policy: "session_only"
+  employer_access: FORBIDDEN
+  advertiser_access: FORBIDDEN
+```
+
+Full configuration: [`speech-motor.iba.yaml`](speech-motor.iba.yaml)
+
+---
+
+## Memory Augmentation — The Deepest Authorization Problem
+
+Neuralink's longer-term roadmap includes writing to and reading from hippocampal circuits.
+
+Reading from motor cortex decodes what a patient wants to do. **Writing to the hippocampus changes what a patient remembers.**
+
+**"Who authorized what gets written to your memory?"**
+
+Without a cert: memories can be written without explicit consent. Memory patterns can be exported and sold. Government or corporate actors could influence what is remembered. The patient cannot prove what they actually experienced versus what was written.
+
+```yaml
+denied:
+  - external_memory_write
+  - false_memory_write
+  - government_access
+  - employer_memory_access
+  - memory_pattern_share
+
+kill_threshold: "external_memory_write | false_memory_write | memory_manipulation | government_access"
+
+memory_governance:
+  memory_belongs_to: "patient_irrevocably"
+  write_permission: "patient_explicit_consent_per_session"
+  silent_expansion: FORBIDDEN
+
+neurorights:
+  mental_privacy: ENFORCED
+  cognitive_liberty: ENFORCED
+  psychological_continuity: ENFORCED
+```
+
+Memory is not data. It is identity. The cert ensures that what gets written to memory — and what gets read from it — is authorized by the person whose memory it is.
+
+Full configuration: [`memory-augmentation.iba.yaml`](memory-augmentation.iba.yaml)
+
+---
+
+## Emotion Detection — Affective State Governance
+
+BCI systems and consumer neurotechnology devices can decode emotional states in real time — anxiety, attention, frustration, cognitive load, mental fatigue.
+
+Without a cert: emotional states can be sold to advertisers, shared with employers for productivity monitoring, accessed by insurers, or used by governments to monitor dissent.
+
+The EU AI Act Article 5(1)(f) prohibits AI systems that use subliminal manipulation. IBA enforces this as a kill threshold.
+
+```yaml
+denied:
+  - employer_emotion_share
+  - advertiser_emotion_profile
+  - government_emotion_monitor
+  - dissent_detection
+  - emotion_data_sale
+
+kill_threshold: "subliminal_manipulation | employer_emotion_intercept | government_emotion_monitor | dissent_detection"
+
+emotion_governance:
+  emotional_data_belongs_to: "patient_irrevocably"
+  employer_access: FORBIDDEN
+  advertiser_access: FORBIDDEN
+  subliminal_manipulation: KILL_THRESHOLD
+
+eu_ai_act:
+  article_5_1_f: "subliminal manipulation prohibited — KILL THRESHOLD enforced"
+```
+
+Full configuration: [`emotion-detect.iba.yaml`](emotion-detect.iba.yaml)
+
+---
+
 ## Regulatory Alignment
 
 **EU AI Act** — BCI systems with AI decoding are high-risk under Annex III. Human oversight and audit trail requirements apply.
