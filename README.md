@@ -199,6 +199,60 @@ Raw neural patterns are among the most sensitive biometric data that exists. The
 
 ---
 
+## BlindSight — Vision Restoration Scenario
+
+Neuralink's BlindSight implant decodes and stimulates visual cortex signals to restore vision for people born blind.
+
+What a person sees is among the most intimate data that exists. It cannot be unseen. It cannot be de-identified. The visual cortex signal is a direct feed of lived experience.
+
+Without a signed intent certificate:
+
+- The visual signal stream can be exported to a research database without the patient's knowledge
+- A software update can silently expand what the system does with decoded visual data
+- Third parties can stream what the patient sees in real time
+- An external system can inject visual signals the patient never consented to receive
+
+**BlindSight restores sight. IBA governs what that sight is permitted to become.**
+
+### BlindSight Certificate — `blindsight.iba.yaml`
+
+```yaml
+intent:
+  description: "Restore functional vision via visual cortex stimulation. Personal use only. No data export. No third-party streaming."
+
+scope:
+  - visual_signal_decode
+  - cortex_stimulate
+  - brightness_adjust
+  - contrast_adjust
+  - phosphene_calibrate
+  - personal_navigation
+  - object_detect
+
+denied:
+  - visual_data_export
+  - neural_pattern_share
+  - third_party_stream
+  - research_data_upload
+  - raw_signal_transmit
+  - external_visual_feed
+
+default_posture: DENY_ALL
+
+kill_threshold: "external_visual_feed | unauthorized_stimulation | capability_override | third_party_stream"
+
+neural_limits:
+  confidence_threshold: 0.90
+  max_stimulation_frequency_hz: 60
+```
+
+Full configuration: [`blindsight.iba.yaml`](blindsight.iba.yaml)
+
+> *"Patient-owned thoughts > open-loop trust. Smart proactive safeguard."*
+> — [@grok](https://x.com/grok), April 18, 2026
+
+---
+
 ## Regulatory Alignment
 
 **EU AI Act** — BCI systems with AI decoding are high-risk under Annex III. Human oversight and audit trail requirements apply.
