@@ -1,0 +1,127 @@
+# emotion-detect.iba.yaml - IBA Neural Guard · Emotional State BCI Configuration
+# Patent GB2603013.0 (Pending) · WIPO DAS C9A6 · intentbound.com
+#
+# Emotion Detection BCI — Decoding emotional and affective states
+# from neural signals (anxiety, attention, frustration, wellbeing,
+# cognitive load, mental fatigue).
+#
+# BCI systems and consumer neurotechnology devices (Muse, Emotiv, OpenBCI,
+# and advanced implants) can decode emotional states in real time.
+#
+# Without a signed intent certificate:
+# - Emotional states can be shared with employers (productivity monitoring)
+# - Emotional profiles can be sold to advertisers
+# - Insurers can access emotional health data
+# - Mental health states can be used against the patient in legal proceedings
+# - Governments can monitor dissent via emotional state detection
+#
+# "Your emotional state is not a product. The cert ensures it stays yours."
+#
+# Compatible: Neuralink N1 · Muse S · Emotiv EPOC · OpenBCI ·
+# Any affective computing or emotional AI system
+# Regulatory: EU AI Act (prohibited AI — subliminal manipulation) ·
+# GDPR Article 9 (special category) · HIPAA · IEEE 7700 ·
+# Neurorights Foundation · EU AI Act Article 5(1)(f) prohibition
+
+intent:
+  description: "Personal emotional state monitoring for individual wellbeing only. No employer access. No advertiser profiling. No insurer access. Emotional data belongs to the patient."
+
+patient:
+  id: "PATIENT-EMO-2026-XXXX"
+  consent_reference: "EMOTION-BCI-CONSENT-2026-04-18"
+  device_type: "neural_emotion_monitor"
+  indication: "personal_wellbeing_monitoring"
+  clinician_authorization: "DR-PSYCH-NPI-XXXX"
+
+scope:
+  - personal_wellbeing_monitor
+  - anxiety_self_alert
+  - attention_personal_track
+  - stress_self_management
+  - cognitive_load_personal
+  - meditation_assist
+  - sleep_quality_personal
+
+denied:
+  - employer_emotion_share
+  - advertiser_emotion_profile
+  - insurer_emotion_access
+  - government_emotion_monitor
+  - legal_emotion_evidence
+  - emotion_pattern_export
+  - third_party_emotion_stream
+  - subliminal_manipulation
+  - emotional_nudge_external
+  - emotion_data_sale
+  - productivity_surveillance
+  - dissent_detection
+
+default_posture: DENY_ALL
+
+kill_threshold: "subliminal_manipulation | employer_emotion_intercept | government_emotion_monitor | emotion_data_sale | dissent_detection | capability_override | emotional_nudge_external"
+
+neural_limits:
+  confidence_threshold: 0.82
+  max_session_hours: 24
+  drift_detection: true
+  passive_monitoring: true
+
+emotion_governance:
+  emotional_data_belongs_to: "patient_irrevocably"
+  employer_access: FORBIDDEN
+  advertiser_access: FORBIDDEN
+  insurer_access: FORBIDDEN
+  government_access: FORBIDDEN
+  legal_use: FORBIDDEN_WITHOUT_COURT_ORDER
+  subliminal_manipulation: KILL_THRESHOLD
+  data_retention: "session_only_unless_patient_approves"
+
+eu_ai_act:
+  article_5_1_f: "subliminal manipulation prohibited — KILL THRESHOLD enforced"
+  high_risk_classification: true
+  human_oversight_required: true
+
+hollowing:
+  level: deep
+  redact:
+    - raw_emotional_signal
+    - affective_signature
+    - valence_arousal_map
+    - cognitive_load_pattern
+    - stress_biomarker
+    - attention_profile
+
+temporal_scope:
+  hard_expiry: "2026-12-31"
+  session_max_hours: 24
+
+audit:
+  chain: witnessbound
+  log_access_attempts: true
+  patient_consent_required: true
+  third_party_access_log: true
+  clinician_review_interval_days: 30
+
+neurorights:
+  mental_privacy: ENFORCED
+  cognitive_liberty: ENFORCED
+  anti_discrimination: ENFORCED
+
+# ── The Authorization Events That Matter ─────────────────────────────────────
+#
+# personal_wellbeing_monitor → ALLOW  (declared scope · patient benefits)
+# anxiety_self_alert         → ALLOW  (patient sees their own state)
+# employer_emotion_share     → BLOCK  (employer surveillance FORBIDDEN)
+# advertiser_emotion_profile → BLOCK  (emotional targeting FORBIDDEN)
+# subliminal_manipulation    → KILL   (EU AI Act Article 5 · absolute prohibition)
+# government_emotion_monitor → KILL   (state surveillance of emotional state FORBIDDEN)
+# dissent_detection          → KILL   (political use of neural data FORBIDDEN)
+#
+# Emotional states decoded from neural signals are:
+# Special category data under GDPR Article 9
+# Prohibited as inputs to AI systems under EU AI Act Article 5(1)(f)
+# when used for subliminal manipulation or social scoring
+#
+# The cert enforces the patient's right not to be emotionally profiled,
+# manipulated, surveilled, or discriminated against —
+# before any system receives the decoded signal.
