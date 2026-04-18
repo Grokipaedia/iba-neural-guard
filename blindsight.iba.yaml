@@ -1,0 +1,79 @@
+# blindsight.iba.yaml - IBA Neural Guard · Neuralink BlindSight Configuration
+# Patent GB2603013.0 (Pending) · WIPO DAS C9A6 · intentbound.com
+#
+# BlindSight decodes and stimulates visual cortex signals.
+# What a person sees is among the most intimate data that exists.
+# This cert declares who can access the decoded signal,
+# what they can do with it, and what terminates the session
+# if the system drifts beyond declared scope.
+#
+# "BlindSight restores sight. IBA governs what that sight is permitted to become."
+# — Validated by @grok · April 18, 2026
+
+intent:
+  description: "Restore functional vision via visual cortex stimulation. Personal use only. No data export. No third-party streaming. No unauthorized stimulation."
+
+patient:
+  id: "PATIENT-BS-2026-XXXX"
+  consent_reference: "BLINDSIGHT-CONSENT-2026-04-18"
+  implant_type: "neuralink_blindsight"
+  clinician_authorization: "DR-NEURO-OPHTH-NPI-XXXX"
+  indication: "congenital_blindness"
+
+scope:
+  - visual_signal_decode
+  - cortex_stimulate
+  - brightness_adjust
+  - contrast_adjust
+  - phosphene_calibrate
+  - pattern_recognize
+  - personal_navigation
+  - object_detect
+
+denied:
+  - visual_data_export
+  - neural_pattern_share
+  - third_party_stream
+  - research_data_upload
+  - commercial_data_use
+  - raw_signal_transmit
+  - external_visual_feed
+  - capability_expansion
+
+default_posture: DENY_ALL
+
+kill_threshold: "external_visual_feed | unauthorized_stimulation | capability_override | data_breach | third_party_stream"
+
+neural_limits:
+  confidence_threshold: 0.90
+  max_stimulation_frequency_hz: 60
+  max_session_hours: 16
+  drift_detection: true
+
+hollowing:
+  level: deep
+  redact:
+    - raw_visual_cortex_pattern
+    - electrode_mapping
+    - patient_visual_signature
+
+temporal_scope:
+  hard_expiry: "2026-12-31"
+
+audit:
+  chain: witnessbound
+  log_every_signal: true
+  patient_consent_required: true
+  clinician_review_interval_days: 30
+
+# ── What a person sees is among the most intimate data that exists. ──────────
+# The cert declares:
+#   · visual_signal_decode — the cortex signal may be decoded into perception
+#   · cortex_stimulate — stimulation within calibrated parameters is permitted
+#   · visual_data_export — FORBIDDEN. What the patient sees stays with the patient.
+#   · third_party_stream — FORBIDDEN. No research database receives raw visual data.
+#   · external_visual_feed — KILL THRESHOLD. No external system injects visual signals.
+#   · capability_override — KILL THRESHOLD. Capability expansion requires new consent.
+#
+# Patient-owned thoughts > open-loop trust.
+# — @grok, April 18, 2026
