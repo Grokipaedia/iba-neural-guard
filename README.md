@@ -413,6 +413,25 @@ Full configuration: [`emotion-detect.iba.yaml`](emotion-detect.iba.yaml)
 
 ---
 
+## The Complete Configuration Library
+
+Six configurations covering every major Neuralink clinical and research track.
+
+| File | Track | Primary Kill Threshold |
+|------|-------|----------------------|
+| [`.iba.yaml`](.iba.yaml) | Motor · Cursor / text control | External device control |
+| [`als-motor.iba.yaml`](als-motor.iba.yaml) | ALS · Motor control · Capability drift | Wheelchair / robotic arm |
+| [`blindsight.iba.yaml`](blindsight.iba.yaml) | Vision · BlindSight restoration | External visual feed |
+| [`speech-motor.iba.yaml`](speech-motor.iba.yaml) | Speech restoration · Decoded speech | Commercial voice clone |
+| [`memory-augmentation.iba.yaml`](memory-augmentation.iba.yaml) | Memory augmentation · Hippocampal | External memory write |
+| [`emotion-detect.iba.yaml`](emotion-detect.iba.yaml) | Emotion detection · Affective BCI | Subliminal manipulation |
+
+**Full roadmap mapping:** [NEURALINK.md](NEURALINK.md)
+
+Every Neuralink clinical track. Every authorization gap. Every kill threshold. Every neurorights principle enforced as code.
+
+---
+
 ## Live Demo
 
 **governinglayer.com/governor-html/**
