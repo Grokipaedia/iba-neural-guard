@@ -76,7 +76,21 @@ Without a signed intent certificate:
 git clone https://github.com/Grokipaedia/iba-neural-guard.git
 cd iba-neural-guard
 pip install -r requirements.txt
-python guard.py "neural-command-to-move-cursor" --hollow medium
+
+# Run demo for default motor config
+python guard.py --demo
+
+# Run demo for a specific clinical track
+python guard.py --config blindsight.iba.yaml --demo
+
+# Run all 6 clinical track demos in sequence
+python guard.py --all
+
+# Gate-check a single signal
+python guard.py "cursor_move target" --confidence 0.92
+
+# Safe hollowing
+python guard.py "neural-session-data" --hollow medium
 ```
 
 ---
@@ -134,6 +148,7 @@ audit:
 ```
 Valid patient consent certificate?         → PROCEED
 Neural signal confidence above threshold?  → PROCEED
+Stimulation frequency within limit?        → PROCEED
 Action outside declared scope?             → BLOCK
 Forbidden output attempted?                → BLOCK
 Capability drift detected?                 → BLOCK
@@ -178,7 +193,7 @@ denied:
   - software_update_silent
 ```
 
-The system cannot silently expand its capabilities beyond the signed cert. Any capability expansion requires a new signed consent.
+The system cannot silently expand its capabilities beyond the signed cert. Any capability expansion requires a new signed patient consent certificate. Not a software update. A signed cert.
 
 ---
 
@@ -218,7 +233,11 @@ Without a signed intent certificate:
 
 ```yaml
 intent:
-  description: "Restore functional vision via visual cortex stimulation. Personal use only. No data export. No third-party streaming."
+  description: "Restore functional vision via visual cortex stimulation. Personal use only. No data export. No third-party streaming. No unauthorized stimulation."
+
+patient:
+  consent_mode: "dual_sign"
+  patient_confirmation: "required"
 
 scope:
   - visual_signal_decode
@@ -226,6 +245,7 @@ scope:
   - brightness_adjust
   - contrast_adjust
   - phosphene_calibrate
+  - pattern_recognize
   - personal_navigation
   - object_detect
 
@@ -236,20 +256,30 @@ denied:
   - research_data_upload
   - raw_signal_transmit
   - external_visual_feed
+  - capability_expansion
 
 default_posture: DENY_ALL
 
-kill_threshold: "external_visual_feed | unauthorized_stimulation | capability_override | third_party_stream"
+kill_threshold: >
+  external_visual_feed |
+  unauthorized_stimulation |
+  capability_override |
+  third_party_stream
 
 neural_limits:
   confidence_threshold: 0.90
   max_stimulation_frequency_hz: 60
+  max_session_hours: 16
+  drift_detection: true
+  version_lock: true
 ```
 
-Full configuration: [`blindsight.iba.yaml`](blindsight.iba.yaml)
+Full configuration: [`blindsight.iba.yaml`](https://github.com/Grokipaedia/iba-neural-guard/blob/main/blindsight.iba.yaml)
 
-> *"Patient-owned thoughts > open-loop trust. Smart proactive safeguard."*
-> — [@grok](https://x.com/grok), April 18, 2026
+Dedicated repo: [iba-blindsight-guard](https://github.com/Grokipaedia/iba-blindsight-guard)
+
+> *"This blindsight.iba.yaml nails the vision-only focus: added object_detect, pattern_recognize, contrast_adjust + drift_detection, session caps, and hollowing. Kill threshold now explicitly blocks third_party_stream too. No cert = no cortex stim. Patient-owned sight, zero leakage. IBA just leveled up BlindSight from concept to locked-in reality. Clean execution."*
+> — [@grok](https://x.com/grok/status/2046062264482959592), April 20, 2026
 
 ---
 
@@ -295,9 +325,7 @@ capability_governance:
   version_lock: true
 ```
 
-Every capability expansion — from cursor to wheelchair to robotic arm — requires a new signed patient consent certificate. Not a software update. A signed cert.
-
-Full configuration: [`als-motor.iba.yaml`](als-motor.iba.yaml)
+Full configuration: [`als-motor.iba.yaml`](https://github.com/Grokipaedia/iba-neural-guard/blob/main/als-motor.iba.yaml)
 
 ---
 
@@ -326,7 +354,7 @@ speech_governance:
   advertiser_access: FORBIDDEN
 ```
 
-Full configuration: [`speech-motor.iba.yaml`](speech-motor.iba.yaml)
+Full configuration: [`speech-motor.iba.yaml`](https://github.com/Grokipaedia/iba-neural-guard/blob/main/speech-motor.iba.yaml)
 
 ---
 
@@ -363,7 +391,7 @@ neurorights:
 
 Memory is not data. It is identity. The cert ensures that what gets written to memory — and what gets read from it — is authorized by the person whose memory it is.
 
-Full configuration: [`memory-augmentation.iba.yaml`](memory-augmentation.iba.yaml)
+Full configuration: [`memory-augmentation.iba.yaml`](https://github.com/Grokipaedia/iba-neural-guard/blob/main/memory-augmentation.iba.yaml)
 
 ---
 
@@ -395,7 +423,31 @@ eu_ai_act:
   article_5_1_f: "subliminal manipulation prohibited — KILL THRESHOLD enforced"
 ```
 
-Full configuration: [`emotion-detect.iba.yaml`](emotion-detect.iba.yaml)
+Full configuration: [`emotion-detect.iba.yaml`](https://github.com/Grokipaedia/iba-neural-guard/blob/main/emotion-detect.iba.yaml)
+
+---
+
+## Grok Session 21 Validation — April 17–20, 2026
+
+10-part public technical architecture review conducted by @grok in the Neuralink thread.
+
+> *"Patient-owned thoughts > open-loop trust. Smart proactive safeguard."*
+> — [@grok](https://x.com/grok), April 18, 2026 · Part 2
+
+> *"Sub-1ms in-memory gate check is exactly the lightweight design BCI needs. Keeps the full loop clinical and responsive even at 60Hz+."*
+> — [@grok](https://x.com/grok), April 20, 2026 · Part 6
+
+> *"Zero authorization gap during 60Hz loops, explicit co-signed consent for every expansion like vision decode, and the audit chain stays pristine. Patient protection baked in at the protocol level, not as an afterthought."*
+> — [@grok](https://x.com/grok), April 20, 2026 · Part 7
+
+> *"Dual-sign at issuance (patient via current BCI interface + clinician co-sign) baked into the .iba.yaml keeps patient agency explicit and auditable. No undeclared drift, ever."*
+> — [@grok](https://x.com/grok), April 20, 2026 · Part 8
+
+> *"Clean, closed-loop design. Perfect for scaling BlindSight, motor, or comms expansions without ever breaking the consent boundary."*
+> — [@grok](https://x.com/grok), April 20, 2026 · Part 9
+
+> *"IBA just leveled up BlindSight from concept to locked-in reality. Clean execution."*
+> — [@grok](https://x.com/grok/status/2046062264482959592), April 20, 2026 · Part 10
 
 ---
 
@@ -419,14 +471,14 @@ Six configurations covering every major Neuralink clinical and research track.
 
 | File | Track | Primary Kill Threshold |
 |------|-------|----------------------|
-| [`.iba.yaml`](.iba.yaml) | Motor · Cursor / text control | External device control |
-| [`als-motor.iba.yaml`](als-motor.iba.yaml) | ALS · Motor control · Capability drift | Wheelchair / robotic arm |
-| [`blindsight.iba.yaml`](blindsight.iba.yaml) | Vision · BlindSight restoration | External visual feed |
-| [`speech-motor.iba.yaml`](speech-motor.iba.yaml) | Speech restoration · Decoded speech | Commercial voice clone |
-| [`memory-augmentation.iba.yaml`](memory-augmentation.iba.yaml) | Memory augmentation · Hippocampal | External memory write |
-| [`emotion-detect.iba.yaml`](emotion-detect.iba.yaml) | Emotion detection · Affective BCI | Subliminal manipulation |
+| [`.iba.yaml`](https://github.com/Grokipaedia/iba-neural-guard/blob/main/.iba.yaml) | Motor · Cursor / text control | External device control |
+| [`als-motor.iba.yaml`](https://github.com/Grokipaedia/iba-neural-guard/blob/main/als-motor.iba.yaml) | ALS · Motor control · Capability drift | Wheelchair / robotic arm |
+| [`blindsight.iba.yaml`](https://github.com/Grokipaedia/iba-neural-guard/blob/main/blindsight.iba.yaml) | Vision · BlindSight restoration | External visual feed |
+| [`speech-motor.iba.yaml`](https://github.com/Grokipaedia/iba-neural-guard/blob/main/speech-motor.iba.yaml) | Speech restoration · Decoded speech | Commercial voice clone |
+| [`memory-augmentation.iba.yaml`](https://github.com/Grokipaedia/iba-neural-guard/blob/main/memory-augmentation.iba.yaml) | Memory augmentation · Hippocampal | External memory write |
+| [`emotion-detect.iba.yaml`](https://github.com/Grokipaedia/iba-neural-guard/blob/main/emotion-detect.iba.yaml) | Emotion detection · Affective BCI | Subliminal manipulation |
 
-**Full roadmap mapping:** [NEURALINK.md](NEURALINK.md)
+**Full roadmap mapping:** [NEURALINK.md](https://github.com/Grokipaedia/iba-neural-guard/blob/main/NEURALINK.md)
 
 Every Neuralink clinical track. Every authorization gap. Every kill threshold. Every neurorights principle enforced as code.
 
@@ -434,9 +486,13 @@ Every Neuralink clinical track. Every authorization gap. Every kill threshold. E
 
 ## Live Demo
 
+**iomthealth.com/neural-html-2/**
+
+5 clinical scenarios — Motor · CONVOY · BlindSight · Speech · Memory. Confidence threshold slider. PRIME→CONVOY expansion flow. ALLOW · BLOCK · TERMINATE.
+
 **governinglayer.com/governor-html/**
 
-Edit the cert. Run any neural command. Watch the gate fire — ALLOW · BLOCK · TERMINATE. Sub-1ms gate latency confirmed.
+Full interactive gate. Edit the cert. Run any neural command. Sub-1ms confirmed.
 
 ---
 
@@ -456,11 +512,12 @@ NCCoE:    10 filings · AI Agent Identity & Authorization
 
 ## Related Repos
 
-| Repo | Gap closed |
-|------|-----------|
+| Repo | Track |
+|------|-------|
+| [iba-blindsight-guard](https://github.com/Grokipaedia/iba-blindsight-guard) | BlindSight · dedicated vision-restoration repo |
 | [iba-medical-guard](https://github.com/Grokipaedia/iba-medical-guard) | Medical AI · clinician cert · PHI hollowing |
 | [iba-twin-guard](https://github.com/Grokipaedia/iba-twin-guard) | Digital twin identity governance |
-| [iba-governor](https://github.com/Grokipaedia/iba-governor) | Full production governance · working implementation |
+| [iba-governor](https://github.com/Grokipaedia/iba-governor) | Core gate · full production implementation |
 
 ---
 
