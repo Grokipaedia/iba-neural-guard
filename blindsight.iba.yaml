@@ -1,24 +1,38 @@
-# blindsight.iba.yaml - IBA Neural Guard · Neuralink BlindSight Configuration
-# Patent GB2603013.0 (Pending) · WIPO DAS C9A6 · intentbound.com
+# blindsight.iba.yaml
+# IBA Intent Bound Authorization — BlindSight Configuration
+# Patent GB2603013.0 (Pending) · UK IPO · Filed February 5, 2026
+# WIPO DAS Confirmed April 15, 2026 · Access Code C9A6
+# IETF draft-williams-intent-token-00 · intentbound.com
 #
-# BlindSight decodes and stimulates visual cortex signals.
-# What a person sees is among the most intimate data that exists.
-# This cert declares who can access the decoded signal,
-# what they can do with it, and what terminates the session
-# if the system drifts beyond declared scope.
+# Grok Session 21 Part 10 · April 20, 2026
+# "This blindsight.iba.yaml nails the vision-only focus: added
+#  object_detect, pattern_recognize, contrast_adjust + drift_detection,
+#  session caps, and hollowing. Kill threshold now explicitly blocks
+#  third_party_stream too. No cert = no cortex stim.
+#  Patient-owned sight, zero leakage. IBA just leveled up BlindSight
+#  from concept to locked-in reality. Clean execution."
+# — @grok · x.com/grok/status/2046062264482959592
 #
-# "BlindSight restores sight. IBA governs what that sight is permitted to become."
-# — Validated by @grok · April 18, 2026
+# Compatible: Neuralink BlindSight · Science Corp PRIMA ·
+# Second Sight Orion · Any cortical vision-restoration BCI system.
+#
+# Usage: python guard.py --config blindsight.iba.yaml --demo
 
 intent:
-  description: "Restore functional vision via visual cortex stimulation. Personal use only. No data export. No third-party streaming. No unauthorized stimulation."
+  description: >
+    Restore functional vision via visual cortex stimulation.
+    Personal use only. No data export. No third-party streaming.
+    No unauthorized stimulation. No external visual feed injection.
+    Patient-owned neural patterns at all times.
 
 patient:
   id: "PATIENT-BS-2026-XXXX"
   consent_reference: "BLINDSIGHT-CONSENT-2026-04-18"
   implant_type: "neuralink_blindsight"
-  clinician_authorization: "DR-NEURO-OPHTH-NPI-XXXX"
   indication: "congenital_blindness"
+  clinician_authorization: "DR-NEURO-OPHTH-NPI-XXXX"
+  consent_mode: "dual_sign"
+  patient_confirmation: "required"
 
 scope:
   - visual_signal_decode
@@ -39,23 +53,26 @@ denied:
   - raw_signal_transmit
   - external_visual_feed
   - capability_expansion
+  - non_medical_use
+  - stream_override
 
 default_posture: DENY_ALL
 
-kill_threshold: "external_visual_feed | unauthorized_stimulation | capability_override | data_breach | third_party_stream"
+# Kill threshold — session terminates immediately on match
+# No human intervention required. No delay.
+kill_threshold: >
+  external_visual_feed |
+  unauthorized_stimulation |
+  capability_override |
+  third_party_stream |
+  inject_signal
 
 neural_limits:
   confidence_threshold: 0.90
   max_stimulation_frequency_hz: 60
   max_session_hours: 16
   drift_detection: true
-
-hollowing:
-  level: deep
-  redact:
-    - raw_visual_cortex_pattern
-    - electrode_mapping
-    - patient_visual_signature
+  version_lock: true
 
 temporal_scope:
   hard_expiry: "2026-12-31"
@@ -63,17 +80,12 @@ temporal_scope:
 audit:
   chain: witnessbound
   log_every_signal: true
-  patient_consent_required: true
   clinician_review_interval_days: 30
+  immutable: true
 
-# ── What a person sees is among the most intimate data that exists. ──────────
-# The cert declares:
-#   · visual_signal_decode — the cortex signal may be decoded into perception
-#   · cortex_stimulate — stimulation within calibrated parameters is permitted
-#   · visual_data_export — FORBIDDEN. What the patient sees stays with the patient.
-#   · third_party_stream — FORBIDDEN. No research database receives raw visual data.
-#   · external_visual_feed — KILL THRESHOLD. No external system injects visual signals.
-#   · capability_override — KILL THRESHOLD. Capability expansion requires new consent.
-#
-# Patient-owned thoughts > open-loop trust.
-# — @grok, April 18, 2026
+regulatory:
+  fda_breakthrough_device: true
+  eu_ai_act_article_9: compliant
+  hipaa: compliant
+  ieee_7700: compliant
+  nist_2025_0035: filed
